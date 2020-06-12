@@ -11,7 +11,7 @@ namespace BinaryTree
         /// <summary>
         /// Binary tree root node
         /// </summary>
-        BinaryTreeNode<T> Root { get; }
+        BinaryTreeNode<T> Root { get; set; }
 
         /// <summary>
         /// Gets all tree nodes count
@@ -24,5 +24,23 @@ namespace BinaryTree
         /// <param name="node">New node</param>
         /// <exception cref="ArgumentNullException"></exception>
         void Insert(BinaryTreeNode<T> node);
+
+        /// <summary>
+        /// Visits all tree nodes in direct order (from min to max node) and performs specified action for each node
+        /// </summary>
+        /// <param name="action">Action to perform</param>
+        void VisitNodesInOrder(Action<BinaryTreeNode<T>> action);
+
+        /// <summary>
+        /// Visits all tree nodes in reverse order (from max to min node) and performs specified action for each node
+        /// </summary>
+        /// <param name="action">Action to perform</param>
+        void VisitNodesInOrderReverse(Action<BinaryTreeNode<T>> action);
+
+        /// <summary>
+        /// Visits all tree nodes in pre order (from root to left and right, symmetric) and performs specified action for each node
+        /// </summary>
+        /// <param name="action">Action to perform</param>
+        void VisitNodesPreOrder(Action<BinaryTreeNode<T>> action);
     }
 }

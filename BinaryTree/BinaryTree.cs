@@ -14,7 +14,7 @@ namespace BinaryTree
             CountNodes = 0;
         }
 
-        public BinaryTreeNode<T> Root { get; private set; }
+        public BinaryTreeNode<T> Root { get; set; }
 
         public int CountNodes { get; private set; }
 
@@ -27,6 +27,21 @@ namespace BinaryTree
             BinaryTreeRecursiveHelper<T>.InsertNode(ref currentRoot, node);
             Root = currentRoot;
             CountNodes++;
+        }
+
+        public void VisitNodesInOrder(Action<BinaryTreeNode<T>> action)
+        {
+            BinaryTreeRecursiveHelper<T>.VisitNodesInOrder(Root, action);
+        }
+
+        public void VisitNodesInOrderReverse(Action<BinaryTreeNode<T>> action)
+        {
+            BinaryTreeRecursiveHelper<T>.VisitNodesInOrderReverse(Root, action);
+        }
+
+        public void VisitNodesPreOrder(Action<BinaryTreeNode<T>> action)
+        {
+            BinaryTreeRecursiveHelper<T>.VisitNodesPreOrder(Root, action);
         }
     }
 }

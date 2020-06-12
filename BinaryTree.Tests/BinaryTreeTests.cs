@@ -1,10 +1,46 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace BinaryTree.Tests
 {
     public class BinaryTreeTests
     {
+        private IBinaryTree<int> SetupTestTree()
+        {
+            //             50
+            //            /  \
+            //           /    \
+            //          /      \
+            //         /        \
+            //        20        70
+            //       /  \      /
+            //      /    \    /
+            //     10    30  60
+            //       \
+            //       15
+
+            var node50 = new BinaryTreeNode<int>(50);
+            var node70 = new BinaryTreeNode<int>(70);
+            var node20 = new BinaryTreeNode<int>(20);
+            var node60 = new BinaryTreeNode<int>(60);
+            var node10 = new BinaryTreeNode<int>(10);
+            var node30 = new BinaryTreeNode<int>(30);
+            var node15 = new BinaryTreeNode<int>(15);
+
+            node50.Left = node20;
+            node50.Right = node70;
+            node20.Left = node10;
+            node20.Right = node30;
+            node70.Left = node60;
+            node10.Right = node15;
+
+            return new BinaryTree<int>()
+            {
+                Root = node50
+            };
+        }
+
         [Fact]
         public void Insert_ShouldThrowException_WhenNodeParameterIsNull()
         {
@@ -58,6 +94,66 @@ namespace BinaryTree.Tests
             var tree = new BinaryTree<int>();
 
             Assert.Equal(0, tree.CountNodes);
+        }
+
+        [Fact]
+        public void VisitNodesInOrder_ShouldPassTreeFromMinToMaxNode()
+        {
+            var tree = SetupTestTree();
+            var nodesInOrderList = new List<BinaryTreeNode<int>>();
+
+            tree.VisitNodesInOrder(node =>
+            {
+                nodesInOrderList.Add(node);
+            });
+
+            Assert.Equal(nodesInOrderList[0], tree.Root.Left.Left);
+            Assert.Equal(nodesInOrderList[1], tree.Root.Left.Left.Right);
+            Assert.Equal(nodesInOrderList[2], tree.Root.Left);
+            Assert.Equal(nodesInOrderList[3], tree.Root.Left.Right);
+            Assert.Equal(nodesInOrderList[4], tree.Root);
+            Assert.Equal(nodesInOrderList[5], tree.Root.Right.Left);
+            Assert.Equal(nodesInOrderList[6], tree.Root.Right);
+        }
+
+        [Fact]
+        public void VisitNodesInOrderReverse_ShouldPassTreeFromMaxToMinNode()
+        {
+            var tree = SetupTestTree();
+            var nodesInOrderReverseList = new List<BinaryTreeNode<int>>();
+
+            tree.VisitNodesInOrderReverse(node =>
+            {
+                nodesInOrderReverseList.Add(node);
+            });
+
+            Assert.Equal(nodesInOrderReverseList[0], tree.Root.Right);
+            Assert.Equal(nodesInOrderReverseList[1], tree.Root.Right.Left);
+            Assert.Equal(nodesInOrderReverseList[2], tree.Root);
+            Assert.Equal(nodesInOrderReverseList[3], tree.Root.Left.Right);
+            Assert.Equal(nodesInOrderReverseList[4], tree.Root.Left);
+            Assert.Equal(nodesInOrderReverseList[5], tree.Root.Left.Left.Right);
+            Assert.Equal(nodesInOrderReverseList[6], tree.Root.Left.Left);
+        }
+
+        [Fact]
+        public void VisitNodesPreOrder_ShouldPassTreeSymmetrically()
+        {
+            var tree = SetupTestTree();
+            var nodesPreOrderList = new List<BinaryTreeNode<int>>();
+
+            tree.VisitNodesPreOrder(node =>
+            {
+                nodesPreOrderList.Add(node);
+            });
+
+            Assert.Equal(nodesPreOrderList[0], tree.Root);
+            Assert.Equal(nodesPreOrderList[1], tree.Root.Left);
+            Assert.Equal(nodesPreOrderList[2], tree.Root.Left.Left);
+            Assert.Equal(nodesPreOrderList[3], tree.Root.Left.Left.Right);
+            Assert.Equal(nodesPreOrderList[4], tree.Root.Left.Right);
+            Assert.Equal(nodesPreOrderList[5], tree.Root.Right);
+            Assert.Equal(nodesPreOrderList[6], tree.Root.Right.Left);
         }
     }
 }
