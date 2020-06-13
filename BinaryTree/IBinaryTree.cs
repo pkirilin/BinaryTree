@@ -42,5 +42,24 @@ namespace BinaryTree
         /// </summary>
         /// <param name="action">Action to perform</param>
         void VisitNodesPreOrder(Action<BinaryTreeNode<T>> action);
+
+        /// <summary>
+        /// Checks if tree contains at least one node with specified value
+        /// </summary>
+        /// <param name="value">Node value</param>
+        bool ContainsValue(T value);
+
+        /// <summary>
+        /// Gets first entry of node with specified value or null if it doesn't exist
+        /// </summary>
+        /// <param name="value">Node value</param>
+        BinaryTreeNode<T> GetNode(T value);
+
+        /// <summary>
+        /// Gets first entry of node with specified value or null if it doesn't exist
+        /// </summary>
+        /// <param name="value">Node value</param>
+        /// <param name="parent">Found node's parent (null for root node)</param>
+        BinaryTreeNode<T> GetNodeWithParent(T value, out BinaryTreeNode<T> parent);
     }
 }

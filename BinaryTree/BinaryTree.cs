@@ -18,6 +18,52 @@ namespace BinaryTree
 
         public int CountNodes { get; private set; }
 
+        public bool ContainsValue(T value)
+        {
+            var foundNode = GetNode(value);
+            return foundNode != null;
+        }
+
+        public BinaryTreeNode<T> GetNode(T value)
+        {
+            var tmp = Root;
+
+            while (tmp != null)
+            {
+                if (value.CompareTo(tmp.Value) == 0)
+                    return tmp;
+
+                if (value.CompareTo(tmp.Value) > 0)
+                    tmp = tmp.Right;
+                else
+                    tmp = tmp.Left;
+            }
+
+            return null;
+        }
+
+        public BinaryTreeNode<T> GetNodeWithParent(T value, out BinaryTreeNode<T> parent)
+        {
+            var tmp = Root;
+            parent = null;
+
+            while (tmp != null)
+            {
+                if (value.CompareTo(tmp.Value) == 0)
+                    return tmp;
+
+                parent = tmp == Root ? null : tmp;
+
+                if (value.CompareTo(tmp.Value) > 0)
+                    tmp = tmp.Right;
+                else
+                    tmp = tmp.Left;
+            }
+
+            parent = null;
+            return null;
+        }
+
         public void Insert(BinaryTreeNode<T> node)
         {
             if (node == null)

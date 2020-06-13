@@ -6,45 +6,10 @@ namespace BinaryTree.Tests
 {
     public class BinaryTreeTests
     {
-        private IBinaryTree<int> SetupTestTree()
-        {
-            //             50
-            //            /  \
-            //           /    \
-            //          /      \
-            //         /        \
-            //        20        70
-            //       /  \      /
-            //      /    \    /
-            //     10    30  60
-            //       \
-            //       15
-
-            var node50 = new BinaryTreeNode<int>(50);
-            var node70 = new BinaryTreeNode<int>(70);
-            var node20 = new BinaryTreeNode<int>(20);
-            var node60 = new BinaryTreeNode<int>(60);
-            var node10 = new BinaryTreeNode<int>(10);
-            var node30 = new BinaryTreeNode<int>(30);
-            var node15 = new BinaryTreeNode<int>(15);
-
-            node50.Left = node20;
-            node50.Right = node70;
-            node20.Left = node10;
-            node20.Right = node30;
-            node70.Left = node60;
-            node10.Right = node15;
-
-            return new BinaryTree<int>()
-            {
-                Root = node50
-            };
-        }
-
         [Fact]
         public void Insert_ShouldThrowException_WhenNodeParameterIsNull()
         {
-            var tree = SetupTestTree();
+            var tree = BinaryTreeTestData.SetupTestTree();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
@@ -99,7 +64,7 @@ namespace BinaryTree.Tests
         [Fact]
         public void VisitNodesInOrder_ShouldPassTreeFromMinToMaxNode()
         {
-            var tree = SetupTestTree();
+            var tree = BinaryTreeTestData.SetupTestTree();
             var nodesInOrderList = new List<BinaryTreeNode<int>>();
 
             tree.VisitNodesInOrder(node =>
@@ -119,7 +84,7 @@ namespace BinaryTree.Tests
         [Fact]
         public void VisitNodesInOrderReverse_ShouldPassTreeFromMaxToMinNode()
         {
-            var tree = SetupTestTree();
+            var tree = BinaryTreeTestData.SetupTestTree();
             var nodesInOrderReverseList = new List<BinaryTreeNode<int>>();
 
             tree.VisitNodesInOrderReverse(node =>
@@ -139,7 +104,7 @@ namespace BinaryTree.Tests
         [Fact]
         public void VisitNodesPreOrder_ShouldPassTreeSymmetrically()
         {
-            var tree = SetupTestTree();
+            var tree = BinaryTreeTestData.SetupTestTree();
             var nodesPreOrderList = new List<BinaryTreeNode<int>>();
 
             tree.VisitNodesPreOrder(node =>
@@ -154,6 +119,34 @@ namespace BinaryTree.Tests
             Assert.Equal(nodesPreOrderList[4], tree.Root.Left.Right);
             Assert.Equal(nodesPreOrderList[5], tree.Root.Right);
             Assert.Equal(nodesPreOrderList[6], tree.Root.Right.Left);
+        }
+
+        [Theory]
+        [MemberData(nameof(BinaryTreeTestData.MemberData_ContainsValue), MemberType = typeof(BinaryTreeTestData))]
+        public void ContainsValue_ShouldSearchForSpecifiedValueInTree(BinaryTree<int> tree, int searchValue, bool expectedResult)
+        {
+            var result = tree.ContainsValue(searchValue);
+
+            Assert.Equal(expectedResult, result);
+        }
+
+        [Theory]
+        [MemberData(nameof(BinaryTreeTestData.MemberData_GetNode), MemberType = typeof(BinaryTreeTestData))]
+        public void GetNode_ShouldReturnTargetNode(BinaryTree<int> tree, int searchValue, BinaryTreeNode<int> targetNode)
+        {
+            var result = tree.GetNode(searchValue);
+
+            Assert.Equal(targetNode, result);
+        }
+
+        [Theory]
+        [MemberData(nameof(BinaryTreeTestData.MemberData_GetNodeWithParent), MemberType = typeof(BinaryTreeTestData))]
+        public void GetNodeWithParent_ShouldReturnTargetNodeWithItsParent(BinaryTree<int> tree, int searchValue, BinaryTreeNode<int> targetNode, BinaryTreeNode<int> expectedParent)
+        {
+            var result = tree.GetNodeWithParent(searchValue, out var parent);
+
+            Assert.Equal(targetNode, result);
+            Assert.Equal(expectedParent, parent);
         }
     }
 }
