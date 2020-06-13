@@ -69,9 +69,36 @@ namespace BinaryTree
             if (node == null)
                 throw new ArgumentNullException(nameof(node));
 
-            var currentRoot = Root;
-            BinaryTreeRecursiveHelper<T>.InsertNode(ref currentRoot, node);
-            Root = currentRoot;
+            if (Root == null)
+                Root = node;
+            else
+            {
+                var tmp = Root;
+                var parent = Root;
+                var insertLeft = true;
+
+                while (tmp != null)
+                {
+                    parent = tmp;
+
+                    if (node.Value.CompareTo(tmp.Value) < 0)
+                    {
+                        tmp = tmp.Left;
+                        insertLeft = true;
+                    }
+                    else
+                    {
+                        tmp = tmp.Right;
+                        insertLeft = false;
+                    }   
+                }
+
+                if (insertLeft)
+                    parent.Left = node;
+                else
+                    parent.Right = node;
+            }
+
             CountNodes++;
         }
 
