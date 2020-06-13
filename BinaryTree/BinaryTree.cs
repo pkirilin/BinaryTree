@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+
+[assembly:InternalsVisibleTo("BinaryTree.Tests")]
 
 namespace BinaryTree
 {
@@ -14,7 +17,7 @@ namespace BinaryTree
             CountNodes = 0;
         }
 
-        public BinaryTreeNode<T> Root { get; set; }
+        public BinaryTreeNode<T> Root { get; internal set; }
 
         public int CountNodes { get; private set; }
 

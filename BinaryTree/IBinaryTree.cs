@@ -11,7 +11,7 @@ namespace BinaryTree
         /// <summary>
         /// Binary tree root node
         /// </summary>
-        BinaryTreeNode<T> Root { get; set; }
+        BinaryTreeNode<T> Root { get; }
 
         /// <summary>
         /// Gets all tree nodes count
