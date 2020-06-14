@@ -186,10 +186,8 @@ namespace BinaryTree.Tests
         [Fact]
         public void Delete_ShouldDeleteRootWithoutChildren()
         {
-            var tree = new BinaryTree<int>()
-            {
-                Root = new BinaryTreeNode<int>(100)
-            };
+            var tree = new BinaryTree<int>();
+            tree.Insert(new BinaryTreeNode<int>(100));
 
             tree.Delete(100);
 
@@ -215,16 +213,11 @@ namespace BinaryTree.Tests
         [Fact]
         public void Delete_ShouldDeleteRootWithLeftChild()
         {
-            var tree = new BinaryTree<int>
-            {
-                Root = new BinaryTreeNode<int>(50)
-            };
-
-            tree.Root.Left = new BinaryTreeNode<int>(20)
-            {
-                Left = new BinaryTreeNode<int>(10),
-                Right = new BinaryTreeNode<int>(30)
-            };
+            var tree = new BinaryTree<int>();
+            tree.Insert(new BinaryTreeNode<int>(50));
+            tree.Insert(new BinaryTreeNode<int>(20));
+            tree.Insert(new BinaryTreeNode<int>(10));
+            tree.Insert(new BinaryTreeNode<int>(30));
 
             tree.Delete(50);
 
@@ -245,6 +238,7 @@ namespace BinaryTree.Tests
             Assert.Equal(10, tree.Root.Left.Left.Value);
             Assert.Equal(30, tree.Root.Left.Right.Value);
             Assert.Equal(60, tree.Root.Right.Value);
+            Assert.Equal(15, tree.Root.Left.Left.Right.Value);
             Assert.Null(tree.Root.Right.Left);
             Assert.Null(tree.Root.Right.Right);
         }
@@ -252,21 +246,16 @@ namespace BinaryTree.Tests
         [Fact]
         public void Delete_ShouldDeleteRootWithRightChild()
         {
-            var tree = new BinaryTree<int>
-            {
-                Root = new BinaryTreeNode<int>(50)
-            };
-
-            tree.Root.Right = new BinaryTreeNode<int>(70)
-            {
-                Left = new BinaryTreeNode<int>(80),
-                Right = new BinaryTreeNode<int>(100)
-            };
+            var tree = new BinaryTree<int>();
+            tree.Insert(new BinaryTreeNode<int>(50));
+            tree.Insert(new BinaryTreeNode<int>(70));
+            tree.Insert(new BinaryTreeNode<int>(60));
+            tree.Insert(new BinaryTreeNode<int>(100));
 
             tree.Delete(50);
 
             Assert.Equal(70, tree.Root.Value);
-            Assert.Equal(80, tree.Root.Left.Value);
+            Assert.Equal(60, tree.Root.Left.Value);
             Assert.Equal(100, tree.Root.Right.Value);
         }
 
@@ -290,17 +279,11 @@ namespace BinaryTree.Tests
         [Fact]
         public void Delete_ShouldDeleteRootWithTwoChildren()
         {
-            var tree = new BinaryTree<int>()
-            {
-                Root = new BinaryTreeNode<int>(50)
-            };
-
-            tree.Root.Left = new BinaryTreeNode<int>(20)
-            {
-                Right = new BinaryTreeNode<int>(30)
-            };
-
-            tree.Root.Right = new BinaryTreeNode<int>(70);
+            var tree = new BinaryTree<int>();
+            tree.Insert(new BinaryTreeNode<int>(50));
+            tree.Insert(new BinaryTreeNode<int>(20));
+            tree.Insert(new BinaryTreeNode<int>(30));
+            tree.Insert(new BinaryTreeNode<int>(70));
 
             tree.Delete(50);
 

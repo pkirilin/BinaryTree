@@ -17,7 +17,7 @@ namespace BinaryTree
             CountNodes = 0;
         }
 
-        public BinaryTreeNode<T> Root { get; internal set; }
+        public BinaryTreeNode<T> Root { get; private set; }
 
         public int CountNodes { get; private set; }
 

@@ -9,17 +9,17 @@
         /// <summary>
         /// Node data
         /// </summary>
-        public T Value { get; set; }
+        public T Value { get; internal set; }
 
         /// <summary>
         /// Reference to the left child node
         /// </summary>
-        public BinaryTreeNode<T> Left { get; set; }
+        public BinaryTreeNode<T> Left { get; internal set; }
 
         /// <summary>
         /// Reference to the right child node
         /// </summary>
-        public BinaryTreeNode<T> Right { get; set; }
+        public BinaryTreeNode<T> Right { get; internal set; }
 
         /// <summary>
         /// Node status based on its children

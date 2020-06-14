@@ -18,25 +18,17 @@ namespace BinaryTree.Tests
             //       \
             //       15
 
-            var node50 = new BinaryTreeNode<int>(50);
-            var node70 = new BinaryTreeNode<int>(70);
-            var node20 = new BinaryTreeNode<int>(20);
-            var node60 = new BinaryTreeNode<int>(60);
-            var node10 = new BinaryTreeNode<int>(10);
-            var node30 = new BinaryTreeNode<int>(30);
-            var node15 = new BinaryTreeNode<int>(15);
+            var tree = new BinaryTree<int>();
 
-            node50.Left = node20;
-            node50.Right = node70;
-            node20.Left = node10;
-            node20.Right = node30;
-            node70.Left = node60;
-            node10.Right = node15;
+            tree.Insert(new BinaryTreeNode<int>(50));
+            tree.Insert(new BinaryTreeNode<int>(70));
+            tree.Insert(new BinaryTreeNode<int>(20));
+            tree.Insert(new BinaryTreeNode<int>(60));
+            tree.Insert(new BinaryTreeNode<int>(10));
+            tree.Insert(new BinaryTreeNode<int>(30));
+            tree.Insert(new BinaryTreeNode<int>(15));
 
-            return new BinaryTree<int>()
-            {
-                Root = node50
-            };
+            return tree;
         }
 
         public static IEnumerable<object[]> MemberData_ContainsValue
