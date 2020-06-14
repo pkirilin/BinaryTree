@@ -61,5 +61,11 @@ namespace BinaryTree
         /// <param name="value">Node value</param>
         /// <param name="parent">Found node's parent (null for root node)</param>
         BinaryTreeNode<T> GetNodeWithParent(T value, out BinaryTreeNode<T> parent);
+
+        /// <summary>
+        /// Deletes node with specified value from binary search tree
+        /// </summary>
+        /// <param name="value">Node value for delete</param>
+        void Delete(T value);
     }
 }

@@ -21,6 +21,24 @@
         /// </summary>
         public BinaryTreeNode<T> Right { get; set; }
 
+        /// <summary>
+        /// Node status based on its children
+        /// </summary>
+        public BinaryTreeNodeStatus Status
+        {
+            get
+            {
+                if (Left == null && Right == null)
+                    return BinaryTreeNodeStatus.NodeWithZeroChildren;
+                if (Left != null && Right == null)
+                    return BinaryTreeNodeStatus.NodeWithLeftChild;
+                if (Left == null && Right != null)
+                    return BinaryTreeNodeStatus.NodeWithRightChild;
+
+                return BinaryTreeNodeStatus.NodeWithTwoChildren;
+            }
+        }
+
         public BinaryTreeNode()
         {
             Value = default;

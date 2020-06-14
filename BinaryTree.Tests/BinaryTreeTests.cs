@@ -148,5 +148,158 @@ namespace BinaryTree.Tests
             Assert.Equal(targetNode, result);
             Assert.Equal(expectedParent, parent);
         }
+
+        [Theory]
+        [InlineData(100)]
+        public void Delete_ShouldThrowArgumentException_WhenTryingToDeleteNotExistingNode(int valueToDelete)
+        {
+            var tree = BinaryTreeTestData.SetupTestTree();
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                tree.Delete(valueToDelete);
+            });
+        }
+
+        [Fact]
+        public void Delete_ShouldDeleteRootWithoutChildren()
+        {
+            var tree = new BinaryTree<int>()
+            {
+                Root = new BinaryTreeNode<int>(100)
+            };
+
+            tree.Delete(100);
+
+            Assert.Null(tree.Root);
+        }
+
+        [Fact]
+        public void Delete_ShouldDeleteNodeWithoutChildren()
+        {
+            var tree = BinaryTreeTestData.SetupTestTree();
+
+            tree.Delete(15);
+
+            Assert.Equal(50, tree.Root.Value);
+            Assert.Equal(20, tree.Root.Left.Value);
+            Assert.Equal(70, tree.Root.Right.Value);
+            Assert.Equal(10, tree.Root.Left.Left.Value);
+            Assert.Equal(30, tree.Root.Left.Right.Value);
+            Assert.Equal(60, tree.Root.Right.Left.Value);
+            Assert.Null(tree.Root.Left.Left.Right);
+        }
+
+        [Fact]
+        public void Delete_ShouldDeleteRootWithLeftChild()
+        {
+            var tree = new BinaryTree<int>
+            {
+                Root = new BinaryTreeNode<int>(50)
+            };
+
+            tree.Root.Left = new BinaryTreeNode<int>(20)
+            {
+                Left = new BinaryTreeNode<int>(10),
+                Right = new BinaryTreeNode<int>(30)
+            };
+
+            tree.Delete(50);
+
+            Assert.Equal(20, tree.Root.Value);
+            Assert.Equal(10, tree.Root.Left.Value);
+            Assert.Equal(30, tree.Root.Right.Value);
+        }
+
+        [Fact]
+        public void Delete_ShouldDeleteNodeWithLeftChild()
+        {
+            var tree = BinaryTreeTestData.SetupTestTree();
+
+            tree.Delete(70);
+
+            Assert.Equal(50, tree.Root.Value);
+            Assert.Equal(20, tree.Root.Left.Value);
+            Assert.Equal(10, tree.Root.Left.Left.Value);
+            Assert.Equal(30, tree.Root.Left.Right.Value);
+            Assert.Equal(60, tree.Root.Right.Value);
+            Assert.Null(tree.Root.Right.Left);
+            Assert.Null(tree.Root.Right.Right);
+        }
+
+        [Fact]
+        public void Delete_ShouldDeleteRootWithRightChild()
+        {
+            var tree = new BinaryTree<int>
+            {
+                Root = new BinaryTreeNode<int>(50)
+            };
+
+            tree.Root.Right = new BinaryTreeNode<int>(70)
+            {
+                Left = new BinaryTreeNode<int>(80),
+                Right = new BinaryTreeNode<int>(100)
+            };
+
+            tree.Delete(50);
+
+            Assert.Equal(70, tree.Root.Value);
+            Assert.Equal(80, tree.Root.Left.Value);
+            Assert.Equal(100, tree.Root.Right.Value);
+        }
+
+        [Fact]
+        public void Delete_ShouldDeleteNodeWithRightChild()
+        {
+            var tree = BinaryTreeTestData.SetupTestTree();
+
+            tree.Delete(10);
+
+            Assert.Equal(50, tree.Root.Value);
+            Assert.Equal(20, tree.Root.Left.Value);
+            Assert.Equal(70, tree.Root.Right.Value);
+            Assert.Equal(30, tree.Root.Left.Right.Value);
+            Assert.Equal(60, tree.Root.Right.Left.Value);
+            Assert.Equal(15, tree.Root.Left.Left.Value);
+            Assert.Null(tree.Root.Left.Left.Left);
+            Assert.Null(tree.Root.Left.Left.Right);
+        }
+
+        [Fact]
+        public void Delete_ShouldDeleteRootWithTwoChildren()
+        {
+            var tree = new BinaryTree<int>()
+            {
+                Root = new BinaryTreeNode<int>(50)
+            };
+
+            tree.Root.Left = new BinaryTreeNode<int>(20)
+            {
+                Right = new BinaryTreeNode<int>(30)
+            };
+
+            tree.Root.Right = new BinaryTreeNode<int>(70);
+
+            tree.Delete(50);
+
+            Assert.Equal(30, tree.Root.Value);
+            Assert.Equal(20, tree.Root.Left.Value);
+            Assert.Equal(70, tree.Root.Right.Value);
+        }
+
+        [Fact]
+        public void Delete_ShouldDeleteNodeWithTwoChildren()
+        {
+            var tree = BinaryTreeTestData.SetupTestTree();
+
+            tree.Delete(20);
+
+            Assert.Equal(50, tree.Root.Value);
+            Assert.Equal(70, tree.Root.Right.Value);
+            Assert.Equal(60, tree.Root.Right.Left.Value);
+            Assert.Equal(15, tree.Root.Left.Value);
+            Assert.Equal(10, tree.Root.Left.Left.Value);
+            Assert.Equal(30, tree.Root.Left.Right.Value);
+        }
     }
 }
