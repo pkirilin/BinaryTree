@@ -49,8 +49,13 @@ namespace BinaryTree
                     DeleteNodeWithTwoChildren(nodeForDelete, nodeForDeleteParent);
                     break;
                 default:
-                    break;
+                    // Guaranties that existing node will be deleted (if not, throws this exception)
+                    // This allows to perform common post-deleting actions after switch for all cases
+                    // instead of copy-pasting them to each case
+                    throw new NotSupportedException($"Could not determine node for delete status = '${nodeForDelete.Status}'");
             }
+
+            CountNodes--;
         }
 
         public BinaryTreeNode<T> GetNode(T value)

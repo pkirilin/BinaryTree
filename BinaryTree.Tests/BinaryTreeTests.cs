@@ -50,7 +50,6 @@ namespace BinaryTree.Tests
             Assert.Equal(nodeToAdd5, tree.Root.Right.Right);
             Assert.Equal(nodeToAdd6, tree.Root.Left.Left);
             Assert.Equal(nodeToAdd7, tree.Root.Left.Right);
-            Assert.Equal(7, tree.CountNodes);
         }
 
         [Fact]
@@ -58,7 +57,9 @@ namespace BinaryTree.Tests
         {
             var tree = new BinaryTree<int>();
 
-            Assert.Equal(0, tree.CountNodes);
+            var result = tree.CountNodes;
+
+            Assert.Equal(0, result);
         }
 
         [Fact]
@@ -305,6 +306,34 @@ namespace BinaryTree.Tests
             Assert.Equal(15, tree.Root.Left.Value);
             Assert.Equal(10, tree.Root.Left.Left.Value);
             Assert.Equal(30, tree.Root.Left.Right.Value);
+        }
+
+        [Fact]
+        public void CountNodes_ShouldChangeOnInsertingNode()
+        {
+            var tree = new BinaryTree<int>();
+            tree.Insert(new BinaryTreeNode<int>(1));
+            tree.Insert(new BinaryTreeNode<int>(2));
+            tree.Insert(new BinaryTreeNode<int>(3));
+
+            var result = tree.CountNodes;
+
+            Assert.Equal(3, result);
+        }
+
+        [Fact]
+        public void CountNodes_ShouldChangeOnDeletingNode()
+        {
+            var tree = new BinaryTree<int>();
+            tree.Insert(new BinaryTreeNode<int>(1));
+            tree.Insert(new BinaryTreeNode<int>(2));
+            tree.Insert(new BinaryTreeNode<int>(3));
+            tree.Delete(2);
+            tree.Delete(3);
+
+            var result = tree.CountNodes;
+
+            Assert.Equal(1, result);
         }
     }
 }
