@@ -1,4 +1,6 @@
-﻿namespace BinaryTree
+﻿using System;
+
+namespace BinaryTree
 {
     /// <summary>
     /// Represents a binary tree node
@@ -46,6 +48,9 @@
 
         public BinaryTreeNode(T value)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             Value = value;
         }
     }
