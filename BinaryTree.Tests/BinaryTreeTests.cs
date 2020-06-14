@@ -139,6 +139,17 @@ namespace BinaryTree.Tests
             Assert.Equal(targetNode, result);
         }
 
+        [Fact]
+        public void GetNode_ShouldThrowArgumentNullException_WhenValueIsNull()
+        {
+            var tree = new BinaryTree<string>();
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                tree.GetNode(null);
+            });
+        }
+
         [Theory]
         [MemberData(nameof(BinaryTreeTestData.MemberData_GetNodeWithParent), MemberType = typeof(BinaryTreeTestData))]
         public void GetNodeWithParent_ShouldReturnTargetNodeWithItsParent(BinaryTree<int> tree, int searchValue, BinaryTreeNode<int> targetNode, BinaryTreeNode<int> expectedParent)
@@ -147,6 +158,17 @@ namespace BinaryTree.Tests
 
             Assert.Equal(targetNode, result);
             Assert.Equal(expectedParent, parent);
+        }
+
+        [Fact]
+        public void GetNodeWithParent_ShouldThrowArgumentNullException_WhenValueIsNull()
+        {
+            var tree = new BinaryTree<string>();
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                tree.GetNodeWithParent(null, out var parent);
+            });
         }
 
         [Theory]

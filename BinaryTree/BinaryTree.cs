@@ -55,6 +55,9 @@ namespace BinaryTree
 
         public BinaryTreeNode<T> GetNode(T value)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             var tmp = Root;
 
             while (tmp != null)
@@ -73,6 +76,9 @@ namespace BinaryTree
 
         public BinaryTreeNode<T> GetNodeWithParent(T value, out BinaryTreeNode<T> parent)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             var tmp = Root;
             parent = null;
 
