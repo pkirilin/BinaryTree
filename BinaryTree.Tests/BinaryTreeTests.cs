@@ -368,11 +368,11 @@ namespace BinaryTree.Tests
         }
 
         [Fact]
-        public void CountSheetNodes_ShouldReturnCorrectNumber()
+        public void CountLeafNodes_ShouldReturnCorrectNumber()
         {
             var tree = BinaryTreeTestData.SetupTestTree();
 
-            var result = tree.CountSheetNodes;
+            var result = tree.CountLeafNodes;
 
             Assert.Equal(3, result);
         }

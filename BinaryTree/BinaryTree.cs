@@ -22,7 +22,7 @@ namespace BinaryTree
 
         public int CountNodes { get; private set; }
 
-        public int CountSheetNodes
+        public int CountLeafNodes
         {
             get
             {
@@ -259,7 +259,7 @@ namespace BinaryTree
         #region Private -> Delete node methods
 
         /// <summary>
-        /// Deletes sheet node from tree
+        /// Deletes leaf node from tree
         /// </summary>
         /// <param name="node">Node for delete</param>
         /// <param name="parent">Node for delete parent</param>

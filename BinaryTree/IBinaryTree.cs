@@ -22,7 +22,7 @@ namespace BinaryTree
         /// <summary>
         /// Gets count of nodes with no children
         /// </summary>
-        int CountSheetNodes { get; }
+        int CountLeafNodes { get; }
 
         /// <summary>
         /// Gets count of nodes having only one child
