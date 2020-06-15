@@ -44,6 +44,12 @@ namespace BinaryTree
         void VisitNodesPreOrder(Action<BinaryTreeNode<T>> action);
 
         /// <summary>
+        /// Visits all tree nodes in post order and performs specified action for each node
+        /// </summary>
+        /// <param name="action">Action to perform</param>
+        void VisitNodesPostOrder(Action<BinaryTreeNode<T>> action);
+
+        /// <summary>
         /// Checks if tree contains at least one node with specified value
         /// </summary>
         /// <param name="value">Node value</param>
@@ -67,5 +73,10 @@ namespace BinaryTree
         /// </summary>
         /// <param name="value">Node value for delete</param>
         void Delete(T value);
+
+        /// <summary>
+        /// Deletes all nodes from tree
+        /// </summary>
+        void Clear();
     }
 }

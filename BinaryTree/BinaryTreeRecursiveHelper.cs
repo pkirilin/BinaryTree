@@ -52,5 +52,20 @@ namespace BinaryTree
                 VisitNodesPreOrder(root.Right, action);
             }
         }
+
+        /// <summary>
+        /// Visits all tree nodes in post order and performs specified action for each node
+        /// </summary>
+        /// <param name="root">Starting node</param>
+        /// <param name="action">Action to perform</param>
+        public static void VisitNodesPostOrder(BinaryTreeNode<T> root, Action<BinaryTreeNode<T>> action)
+        {
+            if (root != null)
+            {
+                VisitNodesPostOrder(root.Left, action);
+                VisitNodesPostOrder(root.Right, action);
+                action(root);
+            }
+        }
     }
 }

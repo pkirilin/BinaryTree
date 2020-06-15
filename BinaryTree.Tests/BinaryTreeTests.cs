@@ -103,7 +103,7 @@ namespace BinaryTree.Tests
         }
 
         [Fact]
-        public void VisitNodesPreOrder_ShouldPassTreeSymmetrically()
+        public void VisitNodesPreOrder_ShouldPassTreeInPreOrder()
         {
             var tree = BinaryTreeTestData.SetupTestTree();
             var nodesPreOrderList = new List<BinaryTreeNode<int>>();
@@ -120,6 +120,26 @@ namespace BinaryTree.Tests
             Assert.Equal(nodesPreOrderList[4], tree.Root.Left.Right);
             Assert.Equal(nodesPreOrderList[5], tree.Root.Right);
             Assert.Equal(nodesPreOrderList[6], tree.Root.Right.Left);
+        }
+
+        [Fact]
+        public void VisitNodesPostOrder_ShouldPassTreeInPostOrder()
+        {
+            var tree = BinaryTreeTestData.SetupTestTree();
+            var nodesPostOrderList = new List<BinaryTreeNode<int>>();
+
+            tree.VisitNodesPostOrder(node =>
+            {
+                nodesPostOrderList.Add(node);
+            });
+
+            Assert.Equal(nodesPostOrderList[0], tree.Root.Left.Left.Right);
+            Assert.Equal(nodesPostOrderList[1], tree.Root.Left.Left);
+            Assert.Equal(nodesPostOrderList[2], tree.Root.Left.Right);
+            Assert.Equal(nodesPostOrderList[3], tree.Root.Left);
+            Assert.Equal(nodesPostOrderList[4], tree.Root.Right.Left);
+            Assert.Equal(nodesPostOrderList[5], tree.Root.Right);
+            Assert.Equal(nodesPostOrderList[6], tree.Root);
         }
 
         [Theory]
@@ -334,6 +354,17 @@ namespace BinaryTree.Tests
             var result = tree.CountNodes;
 
             Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void Clear_ShouldDeleteAllNodesFromTree()
+        {
+            var tree = BinaryTreeTestData.SetupTestTree();
+
+            tree.Clear();
+
+            Assert.Null(tree.Root);
+            Assert.Equal(0, tree.CountNodes);
         }
     }
 }
