@@ -21,6 +21,55 @@ namespace BinaryTree
 
         public int CountNodes { get; private set; }
 
+        public int CountSheetNodes
+        {
+            get
+            {
+                var count = 0;
+
+                VisitNodesPreOrder(node =>
+                {
+                    if (node.Status == BinaryTreeNodeStatus.NodeWithZeroChildren)
+                        count++;
+                });
+
+                return count;
+            }
+        }
+
+        public int CountNotFullNodes
+        {
+            get
+            {
+                var count = 0;
+
+                VisitNodesPreOrder(node =>
+                {
+                    if (node.Status == BinaryTreeNodeStatus.NodeWithLeftChild
+                        || node.Status == BinaryTreeNodeStatus.NodeWithRightChild)
+                        count++;
+                });
+
+                return count;
+            }
+        }
+
+        public int CountFullNodes
+        {
+            get
+            {
+                var count = 0;
+
+                VisitNodesPreOrder(node =>
+                {
+                    if (node.Status == BinaryTreeNodeStatus.NodeWithTwoChildren)
+                        count++;
+                });
+
+                return count;
+            }
+        }
+
         public BinaryTreeNode<T> GetNode(T value)
         {
             if (value == null)

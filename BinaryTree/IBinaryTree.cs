@@ -19,6 +19,21 @@ namespace BinaryTree
         int CountNodes { get; }
 
         /// <summary>
+        /// Gets count of nodes with no children
+        /// </summary>
+        int CountSheetNodes { get; }
+
+        /// <summary>
+        /// Gets count of nodes having only one child
+        /// </summary>
+        int CountNotFullNodes { get; }
+
+        /// <summary>
+        /// Gets count of nodes having two children
+        /// </summary>
+        int CountFullNodes { get; }
+
+        /// <summary>
         /// Inserts new node to binary tree
         /// </summary>
         /// <param name="node">New node</param>

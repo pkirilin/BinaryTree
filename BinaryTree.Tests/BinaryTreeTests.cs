@@ -366,5 +366,35 @@ namespace BinaryTree.Tests
             Assert.Null(tree.Root);
             Assert.Equal(0, tree.CountNodes);
         }
+
+        [Fact]
+        public void CountSheetNodes_ShouldReturnCorrectNumber()
+        {
+            var tree = BinaryTreeTestData.SetupTestTree();
+
+            var result = tree.CountSheetNodes;
+
+            Assert.Equal(3, result);
+        }
+
+        [Fact]
+        public void CountNotFullNodes_ShouldReturnCorrectNumber()
+        {
+            var tree = BinaryTreeTestData.SetupTestTree();
+
+            var result = tree.CountNotFullNodes;
+
+            Assert.Equal(2, result);
+        }
+
+        [Fact]
+        public void CountFullNodes_ShouldReturnCorrectNumber()
+        {
+            var tree = BinaryTreeTestData.SetupTestTree();
+
+            var result = tree.CountFullNodes;
+
+            Assert.Equal(2, result);
+        }
     }
 }
