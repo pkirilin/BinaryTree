@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BinaryTree
 {
@@ -98,5 +99,13 @@ namespace BinaryTree
         /// Deletes all nodes from tree
         /// </summary>
         void Clear();
+
+        /// <summary>
+        /// Gets absolute path starting from root to node with specified value, including target node
+        /// </summary>
+        /// <param name="value">Specified value</param>
+        /// <returns>A sequence of node values starting from root to node with specified value</returns>
+        /// <exception cref="ArgumentException"></exception>
+        IEnumerable<T> GetAbsolutePathToNode(T value);
     }
 }

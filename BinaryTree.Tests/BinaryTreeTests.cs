@@ -405,5 +405,25 @@ namespace BinaryTree.Tests
 
             Assert.Equal(expectedLevelsCount, result);
         }
+
+        [Theory]
+        [MemberData(nameof(BinaryTreeTestData.MemberData_GetAbsolutePathToNode), MemberType = typeof(BinaryTreeTestData))]
+        public void GetAbsolutePathToNode_ShouldReturnCorrectSequence_WhenTargetNodeExists(BinaryTree<int> tree, int targetValue, IEnumerable<int> expectedSequence)
+        {
+            var result = tree.GetAbsolutePathToNode(targetValue);
+
+            Assert.Equal(expectedSequence, result);
+        }
+
+        [Fact]
+        public void GetAbsolutePathToNode_ShouldThrowArgumentException_WhenTargetNodeDoesNotExist()
+        {
+            var tree = BinaryTreeTestData.SetupTestTree();
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                tree.GetAbsolutePathToNode(100);
+            });
+        }
     }
 }

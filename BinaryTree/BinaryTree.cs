@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 [assembly:InternalsVisibleTo("BinaryTree.Tests")]
@@ -227,6 +228,32 @@ namespace BinaryTree
             {
                 Delete(node.Value);
             });
+        }
+
+        public IEnumerable<T> GetAbsolutePathToNode(T value)
+        {
+            var targetNode = GetNode(value);
+
+            if (targetNode == null)
+                throw new ArgumentException($"Could not get absolute path to node = '{value}' bacause it doesn't exist in tree", nameof(value));
+
+            var tmp = Root;
+            var path = new List<T>();
+
+            while (tmp != null)
+            {
+                path.Add(tmp.Value);
+
+                if (tmp.Value.CompareTo(value) == 0)
+                    break;
+
+                if (value.CompareTo(tmp.Value) < 0)
+                    tmp = tmp.Left;
+                else
+                    tmp = tmp.Right;
+            }
+
+            return path;
         }
 
         #region Private -> Delete node methods

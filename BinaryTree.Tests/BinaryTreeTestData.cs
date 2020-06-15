@@ -91,5 +91,29 @@ namespace BinaryTree.Tests
                 yield return new object[] { tree4, 2 };
             }
         }
+
+        public static IEnumerable<object[]> MemberData_GetAbsolutePathToNode
+        {
+            get
+            {
+                var tree1 = SetupTestTree();
+                var tree2 = new BinaryTree<int>();
+                var tree3 = new BinaryTree<int>();
+
+                var result1 = new List<int>() { 50, 20, 10, 15 };
+                var result2 = new List<int>() { 1 };
+                var result3 = new List<int>() { 3, 1 };
+
+                tree2.Insert(new BinaryTreeNode<int>(1));
+
+                tree3.Insert(new BinaryTreeNode<int>(3));
+                tree3.Insert(new BinaryTreeNode<int>(1));
+                tree3.Insert(new BinaryTreeNode<int>(2));
+
+                yield return new object[] { tree1, 15, result1 };
+                yield return new object[] { tree2, 1, result2 };
+                yield return new object[] { tree3, 1, result3 };
+            }
+        }
     }
 }
