@@ -70,6 +70,16 @@ namespace BinaryTree
             }
         }
 
+        public int CountLevels
+        {
+            get
+            {
+                var maxDepth = -1;
+                BinaryTreeRecursiveHelper<T>.GetMaxDepth(Root, 0, ref maxDepth);
+                return maxDepth;
+            }
+        }
+
         public BinaryTreeNode<T> GetNode(T value)
         {
             if (value == null)

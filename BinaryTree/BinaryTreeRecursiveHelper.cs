@@ -67,5 +67,23 @@ namespace BinaryTree
                 action(root);
             }
         }
+
+        /// <summary>
+        /// Gets max tree depth (levels count)
+        /// </summary>
+        /// <param name="root">Starting node</param>
+        /// <param name="curLevelIndex">Index of current node's level</param>
+        /// <param name="maxDepth">Calculated max depth</param>
+        public static void GetMaxDepth(BinaryTreeNode<T> root, int curLevelIndex, ref int maxDepth)
+        {
+            if (curLevelIndex > maxDepth)
+                maxDepth = curLevelIndex;
+
+            if (root != null)
+            {
+                GetMaxDepth(root.Left, curLevelIndex + 1, ref maxDepth);
+                GetMaxDepth(root.Right, curLevelIndex + 1, ref maxDepth);
+            }
+        }
     }
 }

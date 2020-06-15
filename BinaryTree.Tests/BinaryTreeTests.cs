@@ -396,5 +396,14 @@ namespace BinaryTree.Tests
 
             Assert.Equal(2, result);
         }
+
+        [Theory]
+        [MemberData(nameof(BinaryTreeTestData.MemberData_CountLevels), MemberType = typeof(BinaryTreeTestData))]
+        public void CountLevels_ShouldReturnCorrectNumber(BinaryTree<int> tree, int expectedLevelsCount)
+        {
+            var result = tree.CountLevels;
+
+            Assert.Equal(expectedLevelsCount, result);
+        }
     }
 }

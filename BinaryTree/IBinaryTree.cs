@@ -34,6 +34,11 @@ namespace BinaryTree
         int CountFullNodes { get; }
 
         /// <summary>
+        /// Gets tree levels count
+        /// </summary>
+        int CountLevels { get; }
+
+        /// <summary>
         /// Inserts new node to binary tree
         /// </summary>
         /// <param name="node">New node</param>

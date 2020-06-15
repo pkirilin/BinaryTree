@@ -69,5 +69,27 @@ namespace BinaryTree.Tests
                 yield return new object[] { tree, 100, null, null };
             }
         }
+
+        public static IEnumerable<object[]> MemberData_CountLevels
+        {
+            get
+            {
+                var tree1 = SetupTestTree();
+                var tree2 = new BinaryTree<int>();
+                var tree3 = new BinaryTree<int>();
+                var tree4 = new BinaryTree<int>();
+
+                tree2.Insert(new BinaryTreeNode<int>(1));
+
+                tree4.Insert(new BinaryTreeNode<int>(2));
+                tree4.Insert(new BinaryTreeNode<int>(1));
+                tree4.Insert(new BinaryTreeNode<int>(3));
+
+                yield return new object[] { tree1, 4 };
+                yield return new object[] { tree2, 1 };
+                yield return new object[] { tree3, 0 };
+                yield return new object[] { tree4, 2 };
+            }
+        }
     }
 }
