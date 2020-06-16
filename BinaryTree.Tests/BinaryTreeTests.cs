@@ -7,9 +7,9 @@ namespace BinaryTree.Tests
     public class BinaryTreeTests
     {
         [Fact]
-        public void Insert_ShouldThrowException_WhenNodeParameterIsNull()
+        public void Insert_ShouldThrowException_WhenValueParameterIsNull()
         {
-            var tree = BinaryTreeTestData.SetupTestTree();
+            var tree = new BinaryTree<string>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
@@ -18,18 +18,30 @@ namespace BinaryTree.Tests
         }
 
         [Fact]
+        public void Insert_ShouldThrowArgumentException_WhenValueAlreadyExists()
+        {
+            var tree = new BinaryTree<int>();
+            tree.Insert(1);
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                tree.Insert(1);
+            });
+        }
+
+        [Fact]
         public void Insert_ShouldInsertNode()
         {
             var tree = new BinaryTree<int>();
-            var nodeToAdd1 = new BinaryTreeNode<int>(50);
-            var nodeToAdd2 = new BinaryTreeNode<int>(70);
-            var nodeToAdd3 = new BinaryTreeNode<int>(20);
-            var nodeToAdd4 = new BinaryTreeNode<int>(60);
-            var nodeToAdd5 = new BinaryTreeNode<int>(80);
-            var nodeToAdd6 = new BinaryTreeNode<int>(10);
-            var nodeToAdd7 = new BinaryTreeNode<int>(30);
+            var nodeToAdd1 = 50;
+            var nodeToAdd2 = 70;
+            var nodeToAdd3 = 20;
+            var nodeToAdd4 = 60;
+            var nodeToAdd5 = 80;
+            var nodeToAdd6 = 10;
+            var nodeToAdd7 = 30;
 
-            var nodesToAdd = new List<BinaryTreeNode<int>>
+            var nodesToAdd = new List<int>
             {
                 nodeToAdd1,
                 nodeToAdd2,
@@ -43,13 +55,13 @@ namespace BinaryTree.Tests
             foreach (var node in nodesToAdd)
                 tree.Insert(node);
 
-            Assert.Equal(nodeToAdd1, tree.Root);
-            Assert.Equal(nodeToAdd2, tree.Root.Right);
-            Assert.Equal(nodeToAdd3, tree.Root.Left);
-            Assert.Equal(nodeToAdd4, tree.Root.Right.Left);
-            Assert.Equal(nodeToAdd5, tree.Root.Right.Right);
-            Assert.Equal(nodeToAdd6, tree.Root.Left.Left);
-            Assert.Equal(nodeToAdd7, tree.Root.Left.Right);
+            Assert.Equal(nodeToAdd1, tree.Root.Value);
+            Assert.Equal(nodeToAdd2, tree.Root.Right.Value);
+            Assert.Equal(nodeToAdd3, tree.Root.Left.Value);
+            Assert.Equal(nodeToAdd4, tree.Root.Right.Left.Value);
+            Assert.Equal(nodeToAdd5, tree.Root.Right.Right.Value);
+            Assert.Equal(nodeToAdd6, tree.Root.Left.Left.Value);
+            Assert.Equal(nodeToAdd7, tree.Root.Left.Right.Value);
         }
 
         [Fact]
@@ -208,7 +220,7 @@ namespace BinaryTree.Tests
         public void Delete_ShouldDeleteRootWithoutChildren()
         {
             var tree = new BinaryTree<int>();
-            tree.Insert(new BinaryTreeNode<int>(100));
+            tree.Insert(100);
 
             tree.Delete(100);
 
@@ -235,10 +247,10 @@ namespace BinaryTree.Tests
         public void Delete_ShouldDeleteRootWithLeftChild()
         {
             var tree = new BinaryTree<int>();
-            tree.Insert(new BinaryTreeNode<int>(50));
-            tree.Insert(new BinaryTreeNode<int>(20));
-            tree.Insert(new BinaryTreeNode<int>(10));
-            tree.Insert(new BinaryTreeNode<int>(30));
+            tree.Insert(50);
+            tree.Insert(20);
+            tree.Insert(10);
+            tree.Insert(30);
 
             tree.Delete(50);
 
@@ -268,10 +280,10 @@ namespace BinaryTree.Tests
         public void Delete_ShouldDeleteRootWithRightChild()
         {
             var tree = new BinaryTree<int>();
-            tree.Insert(new BinaryTreeNode<int>(50));
-            tree.Insert(new BinaryTreeNode<int>(70));
-            tree.Insert(new BinaryTreeNode<int>(60));
-            tree.Insert(new BinaryTreeNode<int>(100));
+            tree.Insert(50);
+            tree.Insert(70);
+            tree.Insert(60);
+            tree.Insert(100);
 
             tree.Delete(50);
 
@@ -301,10 +313,10 @@ namespace BinaryTree.Tests
         public void Delete_ShouldDeleteRootWithTwoChildren()
         {
             var tree = new BinaryTree<int>();
-            tree.Insert(new BinaryTreeNode<int>(50));
-            tree.Insert(new BinaryTreeNode<int>(20));
-            tree.Insert(new BinaryTreeNode<int>(30));
-            tree.Insert(new BinaryTreeNode<int>(70));
+            tree.Insert(50);
+            tree.Insert(20);
+            tree.Insert(30);
+            tree.Insert(70);
 
             tree.Delete(50);
 
@@ -332,9 +344,9 @@ namespace BinaryTree.Tests
         public void CountNodes_ShouldChangeOnInsertingNode()
         {
             var tree = new BinaryTree<int>();
-            tree.Insert(new BinaryTreeNode<int>(1));
-            tree.Insert(new BinaryTreeNode<int>(2));
-            tree.Insert(new BinaryTreeNode<int>(3));
+            tree.Insert(1);
+            tree.Insert(2);
+            tree.Insert(3);
 
             var result = tree.CountNodes;
 
@@ -345,9 +357,9 @@ namespace BinaryTree.Tests
         public void CountNodes_ShouldChangeOnDeletingNode()
         {
             var tree = new BinaryTree<int>();
-            tree.Insert(new BinaryTreeNode<int>(1));
-            tree.Insert(new BinaryTreeNode<int>(2));
-            tree.Insert(new BinaryTreeNode<int>(3));
+            tree.Insert(1);
+            tree.Insert(2);
+            tree.Insert(3);
             tree.Delete(2);
             tree.Delete(3);
 

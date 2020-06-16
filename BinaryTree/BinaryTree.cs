@@ -133,13 +133,17 @@ namespace BinaryTree
             return foundNode != null;
         }
 
-        public void Insert(BinaryTreeNode<T> node)
+        public void Insert(T value)
         {
-            if (node == null)
-                throw new ArgumentNullException(nameof(node));
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+            if (ContainsValue(value))
+                throw new ArgumentException($"Node with value = '{value}' already exists in tree", nameof(value));
+
+            var newNode = new BinaryTreeNode<T>(value);
 
             if (Root == null)
-                Root = node;
+                Root = newNode;
             else
             {
                 var tmp = Root;
@@ -150,7 +154,7 @@ namespace BinaryTree
                 {
                     parent = tmp;
 
-                    if (node.Value.CompareTo(tmp.Value) < 0)
+                    if (value.CompareTo(tmp.Value) < 0)
                     {
                         tmp = tmp.Left;
                         insertLeft = true;
@@ -163,9 +167,9 @@ namespace BinaryTree
                 }
 
                 if (insertLeft)
-                    parent.Left = node;
+                    parent.Left = newNode;
                 else
-                    parent.Right = node;
+                    parent.Right = newNode;
             }
 
             CountNodes++;

@@ -42,9 +42,9 @@ namespace BinaryTree
         /// <summary>
         /// Inserts new node to binary tree
         /// </summary>
-        /// <param name="node">New node</param>
+        /// <param name="value">New node's value</param>
         /// <exception cref="ArgumentNullException"></exception>
-        void Insert(BinaryTreeNode<T> node);
+        void Insert(T value);
 
         /// <summary>
         /// Visits all tree nodes in direct order (from min to max node) and performs specified action for each node

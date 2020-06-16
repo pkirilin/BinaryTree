@@ -20,13 +20,13 @@ namespace BinaryTree.Tests
 
             var tree = new BinaryTree<int>();
 
-            tree.Insert(new BinaryTreeNode<int>(50));
-            tree.Insert(new BinaryTreeNode<int>(70));
-            tree.Insert(new BinaryTreeNode<int>(20));
-            tree.Insert(new BinaryTreeNode<int>(60));
-            tree.Insert(new BinaryTreeNode<int>(10));
-            tree.Insert(new BinaryTreeNode<int>(30));
-            tree.Insert(new BinaryTreeNode<int>(15));
+            tree.Insert(50);
+            tree.Insert(70);
+            tree.Insert(20);
+            tree.Insert(60);
+            tree.Insert(10);
+            tree.Insert(30);
+            tree.Insert(15);
 
             return tree;
         }
@@ -79,11 +79,11 @@ namespace BinaryTree.Tests
                 var tree3 = new BinaryTree<int>();
                 var tree4 = new BinaryTree<int>();
 
-                tree2.Insert(new BinaryTreeNode<int>(1));
+                tree2.Insert(1);
 
-                tree4.Insert(new BinaryTreeNode<int>(2));
-                tree4.Insert(new BinaryTreeNode<int>(1));
-                tree4.Insert(new BinaryTreeNode<int>(3));
+                tree4.Insert(2);
+                tree4.Insert(1);
+                tree4.Insert(3);
 
                 yield return new object[] { tree1, 4 };
                 yield return new object[] { tree2, 1 };
@@ -104,11 +104,11 @@ namespace BinaryTree.Tests
                 var result2 = new List<int>() { 1 };
                 var result3 = new List<int>() { 3, 1 };
 
-                tree2.Insert(new BinaryTreeNode<int>(1));
+                tree2.Insert(1);
 
-                tree3.Insert(new BinaryTreeNode<int>(3));
-                tree3.Insert(new BinaryTreeNode<int>(1));
-                tree3.Insert(new BinaryTreeNode<int>(2));
+                tree3.Insert(3);
+                tree3.Insert(1);
+                tree3.Insert(2);
 
                 yield return new object[] { tree1, 15, result1 };
                 yield return new object[] { tree2, 1, result2 };
