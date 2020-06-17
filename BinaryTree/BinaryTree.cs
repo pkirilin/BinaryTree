@@ -71,11 +71,11 @@ namespace BinaryTree
             }
         }
 
-        public int CountLevels
+        public int Height
         {
             get
             {
-                var maxDepth = -1;
+                var maxDepth = 0;
                 BinaryTreeRecursiveHelper<T>.GetMaxDepth(Root, 0, ref maxDepth);
                 return maxDepth;
             }
@@ -226,40 +226,6 @@ namespace BinaryTree
             CountNodes--;
         }
 
-        public void Clear()
-        {
-            BinaryTreeRecursiveHelper<T>.VisitNodesPostOrder(Root, node =>
-            {
-                Delete(node.Value);
-            });
-        }
-
-        public IEnumerable<T> GetAbsolutePathToNode(T value)
-        {
-            var targetNode = GetNode(value);
-
-            if (targetNode == null)
-                throw new ArgumentException($"Could not get absolute path to node = '{value}' bacause it doesn't exist in tree", nameof(value));
-
-            var tmp = Root;
-            var path = new List<T>();
-
-            while (tmp != null)
-            {
-                path.Add(tmp.Value);
-
-                if (tmp.Value.CompareTo(value) == 0)
-                    break;
-
-                if (value.CompareTo(tmp.Value) < 0)
-                    tmp = tmp.Left;
-                else
-                    tmp = tmp.Right;
-            }
-
-            return path;
-        }
-
         #region Private -> Delete node methods
 
         /// <summary>
@@ -381,5 +347,49 @@ namespace BinaryTree
         }
 
         #endregion
+
+        public void Clear()
+        {
+            BinaryTreeRecursiveHelper<T>.VisitNodesPostOrder(Root, node =>
+            {
+                Delete(node.Value);
+            });
+        }
+
+        public IEnumerable<T> GetAbsolutePathToNode(T value)
+        {
+            var targetNode = GetNode(value);
+
+            if (targetNode == null)
+                throw new ArgumentException($"Could not get absolute path to node = '{value}' bacause it doesn't exist in tree", nameof(value));
+
+            var tmp = Root;
+            var path = new List<T>();
+
+            while (tmp != null)
+            {
+                path.Add(tmp.Value);
+
+                if (tmp.Value.CompareTo(value) == 0)
+                    break;
+
+                if (value.CompareTo(tmp.Value) < 0)
+                    tmp = tmp.Left;
+                else
+                    tmp = tmp.Right;
+            }
+
+            return path;
+        }
+
+        public T[] ToArray()
+        {
+            if (CountNodes == 0)
+                return Array.Empty<T>();
+
+            var array = new T[Convert.ToInt32(Math.Pow(2, Height + 1) - 1)];
+            BinaryTreeRecursiveHelper<T>.ToArray(Root, array, 0);
+            return array;
+        }
     }
 }

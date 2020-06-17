@@ -70,7 +70,7 @@ namespace BinaryTree.Tests
             }
         }
 
-        public static IEnumerable<object[]> MemberData_CountLevels
+        public static IEnumerable<object[]> MemberData_Height
         {
             get
             {
@@ -85,10 +85,10 @@ namespace BinaryTree.Tests
                 tree4.Insert(1);
                 tree4.Insert(3);
 
-                yield return new object[] { tree1, 4 };
-                yield return new object[] { tree2, 1 };
+                yield return new object[] { tree1, 3 };
+                yield return new object[] { tree2, 0 };
                 yield return new object[] { tree3, 0 };
-                yield return new object[] { tree4, 2 };
+                yield return new object[] { tree4, 1 };
             }
         }
 
@@ -113,6 +113,33 @@ namespace BinaryTree.Tests
                 yield return new object[] { tree1, 15, result1 };
                 yield return new object[] { tree2, 1, result2 };
                 yield return new object[] { tree3, 1, result3 };
+            }
+        }
+
+        public static IEnumerable<object[]> MemberData_ToArray
+        {
+            get
+            {
+                var tree1 = SetupTestTree();
+                var tree2 = new BinaryTree<int>();
+                var tree3 = new BinaryTree<int>();
+                var tree4 = new BinaryTree<int>();
+
+                var result1 = new int[] { 50, 20, 70, 10, 30, 60, 0, 0, 15, 0, 0, 0, 0, 0, 0 };
+                var result2 = new int[] { 1 };
+                var result3 = new int[] { 3, 1, 0, 0, 2, 0, 0 };
+                var result4 = new int[] { };
+
+                tree2.Insert(1);
+
+                tree3.Insert(3);
+                tree3.Insert(1);
+                tree3.Insert(2);
+
+                yield return new object[] { tree1, result1 };
+                yield return new object[] { tree2, result2 };
+                yield return new object[] { tree3, result3 };
+                yield return new object[] { tree4, result4 };
             }
         }
     }

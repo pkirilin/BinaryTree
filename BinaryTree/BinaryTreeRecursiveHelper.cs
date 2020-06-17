@@ -69,20 +69,36 @@ namespace BinaryTree
         }
 
         /// <summary>
-        /// Gets max tree depth (levels count)
+        /// Gets max tree depth
         /// </summary>
         /// <param name="root">Starting node</param>
         /// <param name="curLevelIndex">Index of current node's level</param>
         /// <param name="maxDepth">Calculated max depth</param>
         public static void GetMaxDepth(BinaryTreeNode<T> root, int curLevelIndex, ref int maxDepth)
         {
-            if (curLevelIndex > maxDepth)
-                maxDepth = curLevelIndex;
-
             if (root != null)
             {
+                if (curLevelIndex > 0 && curLevelIndex > maxDepth)
+                    maxDepth = curLevelIndex;
+
                 GetMaxDepth(root.Left, curLevelIndex + 1, ref maxDepth);
                 GetMaxDepth(root.Right, curLevelIndex + 1, ref maxDepth);
+            }
+        }
+
+        /// <summary>
+        /// Fills an array representation of binary tree with node values
+        /// </summary>
+        /// <param name="root">Starting node</param>
+        /// <param name="array">Array representation of binary tree</param>
+        /// <param name="index">Current array index</param>
+        public static void ToArray(BinaryTreeNode<T> root, T[] array, int index)
+        {
+            if (root != null)
+            {
+                array[index] = root.Value;
+                ToArray(root.Left, array, 2 * index + 1);
+                ToArray(root.Right, array, 2 * index + 2);
             }
         }
     }

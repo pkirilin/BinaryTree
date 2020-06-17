@@ -35,9 +35,9 @@ namespace BinaryTree
         int CountFullNodes { get; }
 
         /// <summary>
-        /// Gets tree levels count
+        /// Gets tree height
         /// </summary>
-        int CountLevels { get; }
+        int Height { get; }
 
         /// <summary>
         /// Inserts new node to binary tree
@@ -107,5 +107,14 @@ namespace BinaryTree
         /// <returns>A sequence of node values starting from root to node with specified value</returns>
         /// <exception cref="ArgumentException"></exception>
         IEnumerable<T> GetAbsolutePathToNode(T value);
+
+        /// <summary>
+        /// Converts binary tree to its array representation.
+        /// In this representation, for node with index i its children can be found at indices
+        /// 2 * i + 1 (left child) and 2 * i + 2 (right child), while its parent - at index (i - 1) / 2.
+        /// The result array size is equal to 2^(h + 1) - 1, where h is tree height
+        /// </summary>
+        /// <returns>Node values array</returns>
+        T[] ToArray();
     }
 }

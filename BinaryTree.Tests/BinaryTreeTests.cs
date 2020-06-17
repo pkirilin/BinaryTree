@@ -410,12 +410,12 @@ namespace BinaryTree.Tests
         }
 
         [Theory]
-        [MemberData(nameof(BinaryTreeTestData.MemberData_CountLevels), MemberType = typeof(BinaryTreeTestData))]
-        public void CountLevels_ShouldReturnCorrectNumber(BinaryTree<int> tree, int expectedLevelsCount)
+        [MemberData(nameof(BinaryTreeTestData.MemberData_Height), MemberType = typeof(BinaryTreeTestData))]
+        public void Height_ShouldReturnCorrectNumber(BinaryTree<int> tree, int expectedHeight)
         {
-            var result = tree.CountLevels;
+            var result = tree.Height;
 
-            Assert.Equal(expectedLevelsCount, result);
+            Assert.Equal(expectedHeight, result);
         }
 
         [Theory]
@@ -436,6 +436,15 @@ namespace BinaryTree.Tests
             {
                 tree.GetAbsolutePathToNode(100);
             });
+        }
+
+        [Theory]
+        [MemberData(nameof(BinaryTreeTestData.MemberData_ToArray), MemberType = typeof(BinaryTreeTestData))]
+        public void ToArray_ShouldSaveTreeNodeValuesToArray(BinaryTree<int> tree, int[] expectedResult)
+        {
+            var result = tree.ToArray();
+
+            Assert.Equal(expectedResult, result);
         }
     }
 }
