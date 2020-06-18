@@ -6,7 +6,7 @@
     public enum BinaryTreeNodeStatus
     {
         /// <summary>
-        /// Node with left and right subtrees set to null (tree sheet)
+        /// Node with left and right subtrees set to null (tree leaf)
         /// </summary>
         NodeWithZeroChildren,
 

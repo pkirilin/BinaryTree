@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 [assembly:InternalsVisibleTo("BinaryTree.Tests")]
@@ -21,41 +22,63 @@ namespace BinaryTree
 
         public int CountNodes { get; private set; }
 
-        public bool ContainsValue(T value)
+        public int CountLeafNodes
         {
-            var foundNode = GetNode(value);
-            return foundNode != null;
+            get
+            {
+                var count = 0;
+
+                VisitNodesPreOrder(node =>
+                {
+                    if (node.Status == BinaryTreeNodeStatus.NodeWithZeroChildren)
+                        count++;
+                });
+
+                return count;
+            }
         }
 
-        public void Delete(T value)
+        public int CountNotFullNodes
         {
-            var nodeForDelete = GetNodeWithParent(value, out var nodeForDeleteParent);
-
-            if (nodeForDelete == null)
-                throw new ArgumentException($"Cannot delete node with value '{value}' because tree doesn't contain node with this value", nameof(value));
-
-            switch (nodeForDelete.Status)
+            get
             {
-                case BinaryTreeNodeStatus.NodeWithZeroChildren:
-                    DeleteNodeWithZeroChildren(nodeForDelete, nodeForDeleteParent);
-                    break;
-                case BinaryTreeNodeStatus.NodeWithLeftChild:
-                    DeleteNodeWithLeftChild(nodeForDelete, nodeForDeleteParent);
-                    break;
-                case BinaryTreeNodeStatus.NodeWithRightChild:
-                    DeleteNodeWithRightChild(nodeForDelete, nodeForDeleteParent);
-                    break;
-                case BinaryTreeNodeStatus.NodeWithTwoChildren:
-                    DeleteNodeWithTwoChildren(nodeForDelete, nodeForDeleteParent);
-                    break;
-                default:
-                    // Guaranties that existing node will be deleted (if not, throws this exception)
-                    // This allows to perform common post-deleting actions after switch for all cases
-                    // instead of copy-pasting them to each case
-                    throw new NotSupportedException($"Could not determine node for delete status = '${nodeForDelete.Status}'");
-            }
+                var count = 0;
 
-            CountNodes--;
+                VisitNodesPreOrder(node =>
+                {
+                    if (node.Status == BinaryTreeNodeStatus.NodeWithLeftChild
+                        || node.Status == BinaryTreeNodeStatus.NodeWithRightChild)
+                        count++;
+                });
+
+                return count;
+            }
+        }
+
+        public int CountFullNodes
+        {
+            get
+            {
+                var count = 0;
+
+                VisitNodesPreOrder(node =>
+                {
+                    if (node.Status == BinaryTreeNodeStatus.NodeWithTwoChildren)
+                        count++;
+                });
+
+                return count;
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                var maxDepth = 0;
+                BinaryTreeRecursiveHelper<T>.GetMaxDepth(Root, 0, ref maxDepth);
+                return maxDepth;
+            }
         }
 
         public BinaryTreeNode<T> GetNode(T value)
@@ -104,13 +127,23 @@ namespace BinaryTree
             return null;
         }
 
-        public void Insert(BinaryTreeNode<T> node)
+        public bool ContainsValue(T value)
         {
-            if (node == null)
-                throw new ArgumentNullException(nameof(node));
+            var foundNode = GetNode(value);
+            return foundNode != null;
+        }
+
+        public void Insert(T value)
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+            if (ContainsValue(value))
+                throw new ArgumentException($"Node with value = '{value}' already exists in tree", nameof(value));
+
+            var newNode = new BinaryTreeNode<T>(value);
 
             if (Root == null)
-                Root = node;
+                Root = newNode;
             else
             {
                 var tmp = Root;
@@ -121,7 +154,7 @@ namespace BinaryTree
                 {
                     parent = tmp;
 
-                    if (node.Value.CompareTo(tmp.Value) < 0)
+                    if (value.CompareTo(tmp.Value) < 0)
                     {
                         tmp = tmp.Left;
                         insertLeft = true;
@@ -130,13 +163,13 @@ namespace BinaryTree
                     {
                         tmp = tmp.Right;
                         insertLeft = false;
-                    }   
+                    }
                 }
 
                 if (insertLeft)
-                    parent.Left = node;
+                    parent.Left = newNode;
                 else
-                    parent.Right = node;
+                    parent.Right = newNode;
             }
 
             CountNodes++;
@@ -157,10 +190,46 @@ namespace BinaryTree
             BinaryTreeRecursiveHelper<T>.VisitNodesPreOrder(Root, action);
         }
 
+        public void VisitNodesPostOrder(Action<BinaryTreeNode<T>> action)
+        {
+            BinaryTreeRecursiveHelper<T>.VisitNodesPostOrder(Root, action);
+        }
+
+        public void Delete(T value)
+        {
+            var nodeForDelete = GetNodeWithParent(value, out var nodeForDeleteParent);
+
+            if (nodeForDelete == null)
+                throw new ArgumentException($"Cannot delete node with value '{value}' because tree doesn't contain node with this value", nameof(value));
+
+            switch (nodeForDelete.Status)
+            {
+                case BinaryTreeNodeStatus.NodeWithZeroChildren:
+                    DeleteNodeWithZeroChildren(nodeForDelete, nodeForDeleteParent);
+                    break;
+                case BinaryTreeNodeStatus.NodeWithLeftChild:
+                    DeleteNodeWithLeftChild(nodeForDelete, nodeForDeleteParent);
+                    break;
+                case BinaryTreeNodeStatus.NodeWithRightChild:
+                    DeleteNodeWithRightChild(nodeForDelete, nodeForDeleteParent);
+                    break;
+                case BinaryTreeNodeStatus.NodeWithTwoChildren:
+                    DeleteNodeWithTwoChildren(nodeForDelete, nodeForDeleteParent);
+                    break;
+                default:
+                    // Guaranties that existing node will be deleted (if not, throws this exception)
+                    // This allows to perform common post-deleting actions after switch for all cases
+                    // instead of copy-pasting them to each case
+                    throw new NotSupportedException($"Could not determine node for delete status = '${nodeForDelete.Status}'");
+            }
+
+            CountNodes--;
+        }
+
         #region Private -> Delete node methods
 
         /// <summary>
-        /// Deletes sheet node from tree
+        /// Deletes leaf node from tree
         /// </summary>
         /// <param name="node">Node for delete</param>
         /// <param name="parent">Node for delete parent</param>
@@ -278,5 +347,49 @@ namespace BinaryTree
         }
 
         #endregion
+
+        public void Clear()
+        {
+            BinaryTreeRecursiveHelper<T>.VisitNodesPostOrder(Root, node =>
+            {
+                Delete(node.Value);
+            });
+        }
+
+        public IEnumerable<T> GetAbsolutePathToNode(T value)
+        {
+            var targetNode = GetNode(value);
+
+            if (targetNode == null)
+                throw new ArgumentException($"Could not get absolute path to node = '{value}' bacause it doesn't exist in tree", nameof(value));
+
+            var tmp = Root;
+            var path = new List<T>();
+
+            while (tmp != null)
+            {
+                path.Add(tmp.Value);
+
+                if (tmp.Value.CompareTo(value) == 0)
+                    break;
+
+                if (value.CompareTo(tmp.Value) < 0)
+                    tmp = tmp.Left;
+                else
+                    tmp = tmp.Right;
+            }
+
+            return path;
+        }
+
+        public T[] ToArray()
+        {
+            if (CountNodes == 0)
+                return Array.Empty<T>();
+
+            var array = new T[Convert.ToInt32(Math.Pow(2, Height + 1) - 1)];
+            BinaryTreeRecursiveHelper<T>.ToArray(Root, array, 0);
+            return array;
+        }
     }
 }
