@@ -10,7 +10,7 @@ namespace BinaryTree
     /// Represents a generic binary search tree
     /// </summary>
     /// <typeparam name="T">Binary tree node data type</typeparam>
-    public class BinaryTree<T> : IBinaryTree<T> where T : IComparable<T>
+    public class BinaryTree<T> where T : IComparable<T>
     {
         public BinaryTree()
         {
@@ -18,17 +18,26 @@ namespace BinaryTree
             CountNodes = 0;
         }
 
+        /// <summary>
+        /// Binary tree root node
+        /// </summary>
         public BinaryTreeNode<T> Root { get; private set; }
 
+        /// <summary>
+        /// Gets all tree nodes count
+        /// </summary>
         public int CountNodes { get; private set; }
 
+        /// <summary>
+        /// Gets count of nodes with no children
+        /// </summary>
         public int CountLeafNodes
         {
             get
             {
                 var count = 0;
 
-                VisitNodesPreOrder(node =>
+                TraversalPreOrder(node =>
                 {
                     if (node.Status == BinaryTreeNodeStatus.NodeWithZeroChildren)
                         count++;
@@ -38,13 +47,16 @@ namespace BinaryTree
             }
         }
 
+        /// <summary>
+        /// Gets count of nodes having only one child
+        /// </summary>
         public int CountNotFullNodes
         {
             get
             {
                 var count = 0;
 
-                VisitNodesPreOrder(node =>
+                TraversalPreOrder(node =>
                 {
                     if (node.Status == BinaryTreeNodeStatus.NodeWithLeftChild
                         || node.Status == BinaryTreeNodeStatus.NodeWithRightChild)
@@ -55,13 +67,16 @@ namespace BinaryTree
             }
         }
 
+        /// <summary>
+        /// Gets count of nodes having two children
+        /// </summary>
         public int CountFullNodes
         {
             get
             {
                 var count = 0;
 
-                VisitNodesPreOrder(node =>
+                TraversalPreOrder(node =>
                 {
                     if (node.Status == BinaryTreeNodeStatus.NodeWithTwoChildren)
                         count++;
@@ -71,6 +86,9 @@ namespace BinaryTree
             }
         }
 
+        /// <summary>
+        /// Gets tree height
+        /// </summary>
         public int Height
         {
             get
@@ -81,6 +99,10 @@ namespace BinaryTree
             }
         }
 
+        /// <summary>
+        /// Gets first entry of node with specified value or null if it doesn't exist
+        /// </summary>
+        /// <param name="value">Node value</param>
         public BinaryTreeNode<T> GetNode(T value)
         {
             if (value == null)
@@ -102,6 +124,11 @@ namespace BinaryTree
             return null;
         }
 
+        /// <summary>
+        /// Gets first entry of node with specified value or null if it doesn't exist
+        /// </summary>
+        /// <param name="value">Node value</param>
+        /// <param name="parent">Found node's parent (null for root node)</param>
         public BinaryTreeNode<T> GetNodeWithParent(T value, out BinaryTreeNode<T> parent)
         {
             if (value == null)
@@ -127,12 +154,21 @@ namespace BinaryTree
             return null;
         }
 
+        /// <summary>
+        /// Checks if tree contains at least one node with specified value
+        /// </summary>
+        /// <param name="value">Node value</param>
         public bool ContainsValue(T value)
         {
             var foundNode = GetNode(value);
             return foundNode != null;
         }
 
+        /// <summary>
+        /// Inserts new node to binary tree
+        /// </summary>
+        /// <param name="value">New node's value</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public void Insert(T value)
         {
             if (value == null)
@@ -175,26 +211,46 @@ namespace BinaryTree
             CountNodes++;
         }
 
-        public void VisitNodesInOrder(Action<BinaryTreeNode<T>> action)
+        /// <summary>
+        /// Visits all tree nodes in direct order (from min to max node) and performs specified action for each node
+        /// </summary>
+        /// <param name="action">Action to perform</param>
+        public void TraversalInOrder(Action<BinaryTreeNode<T>> action)
         {
-            BinaryTreeRecursiveHelper<T>.VisitNodesInOrder(Root, action);
+            BinaryTreeRecursiveHelper<T>.TraversalInOrder(Root, action);
         }
 
-        public void VisitNodesInOrderReverse(Action<BinaryTreeNode<T>> action)
+        /// <summary>
+        /// Visits all tree nodes in reverse order (from max to min node) and performs specified action for each node
+        /// </summary>
+        /// <param name="action">Action to perform</param>
+        public void TraversalInOrderReverse(Action<BinaryTreeNode<T>> action)
         {
-            BinaryTreeRecursiveHelper<T>.VisitNodesInOrderReverse(Root, action);
+            BinaryTreeRecursiveHelper<T>.TraversalInOrderReverse(Root, action);
         }
 
-        public void VisitNodesPreOrder(Action<BinaryTreeNode<T>> action)
+        /// <summary>
+        /// Visits all tree nodes in pre order (from root to left and right, symmetric) and performs specified action for each node
+        /// </summary>
+        /// <param name="action">Action to perform</param>
+        public void TraversalPreOrder(Action<BinaryTreeNode<T>> action)
         {
-            BinaryTreeRecursiveHelper<T>.VisitNodesPreOrder(Root, action);
+            BinaryTreeRecursiveHelper<T>.TraversalPreOrder(Root, action);
         }
 
-        public void VisitNodesPostOrder(Action<BinaryTreeNode<T>> action)
+        /// <summary>
+        /// Visits all tree nodes in post order and performs specified action for each node
+        /// </summary>
+        /// <param name="action">Action to perform</param>
+        public void TraversalPostOrder(Action<BinaryTreeNode<T>> action)
         {
-            BinaryTreeRecursiveHelper<T>.VisitNodesPostOrder(Root, action);
+            BinaryTreeRecursiveHelper<T>.TraversalPostOrder(Root, action);
         }
 
+        /// <summary>
+        /// Deletes node with specified value from binary search tree
+        /// </summary>
+        /// <param name="value">Node value for delete</param>
         public void Delete(T value)
         {
             var nodeForDelete = GetNodeWithParent(value, out var nodeForDeleteParent);
@@ -348,14 +404,23 @@ namespace BinaryTree
 
         #endregion
 
+        /// <summary>
+        /// Deletes all nodes from tree
+        /// </summary>
         public void Clear()
         {
-            BinaryTreeRecursiveHelper<T>.VisitNodesPostOrder(Root, node =>
+            BinaryTreeRecursiveHelper<T>.TraversalPostOrder(Root, node =>
             {
                 Delete(node.Value);
             });
         }
 
+        /// <summary>
+        /// Gets absolute path starting from root to node with specified value, including target node
+        /// </summary>
+        /// <param name="value">Specified value</param>
+        /// <returns>A sequence of node values starting from root to node with specified value</returns>
+        /// <exception cref="ArgumentException"></exception>
         public IEnumerable<T> GetAbsolutePathToNode(T value)
         {
             var targetNode = GetNode(value);
@@ -382,6 +447,13 @@ namespace BinaryTree
             return path;
         }
 
+        /// <summary>
+        /// Converts binary tree to its array representation.
+        /// In this representation, for node with index i its children can be found at indices
+        /// 2 * i + 1 (left child) and 2 * i + 2 (right child), while its parent - at index (i - 1) / 2.
+        /// The result array size is equal to 2^(h + 1) - 1, where h is tree height
+        /// </summary>
+        /// <returns>Node values array</returns>
         public T[] ToArray()
         {
             if (CountNodes == 0)
