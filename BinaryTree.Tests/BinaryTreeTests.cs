@@ -75,12 +75,12 @@ namespace BinaryTree.Tests
         }
 
         [Fact]
-        public void VisitNodesInOrder_ShouldPassTreeFromMinToMaxNode()
+        public void TraversalInOrder_ShouldPassTreeFromMinToMaxNode()
         {
             var tree = BinaryTreeTestData.SetupTestTree();
             var nodesInOrderList = new List<BinaryTreeNode<int>>();
 
-            tree.VisitNodesInOrder(node =>
+            tree.TraversalInOrder(node =>
             {
                 nodesInOrderList.Add(node);
             });
@@ -95,12 +95,12 @@ namespace BinaryTree.Tests
         }
 
         [Fact]
-        public void VisitNodesInOrderReverse_ShouldPassTreeFromMaxToMinNode()
+        public void TraversalInOrderReverse_ShouldPassTreeFromMaxToMinNode()
         {
             var tree = BinaryTreeTestData.SetupTestTree();
             var nodesInOrderReverseList = new List<BinaryTreeNode<int>>();
 
-            tree.VisitNodesInOrderReverse(node =>
+            tree.TraversalInOrderReverse(node =>
             {
                 nodesInOrderReverseList.Add(node);
             });
@@ -115,12 +115,12 @@ namespace BinaryTree.Tests
         }
 
         [Fact]
-        public void VisitNodesPreOrder_ShouldPassTreeInPreOrder()
+        public void TraversalPreOrder_ShouldPassTreeInPreOrder()
         {
             var tree = BinaryTreeTestData.SetupTestTree();
             var nodesPreOrderList = new List<BinaryTreeNode<int>>();
 
-            tree.VisitNodesPreOrder(node =>
+            tree.TraversalPreOrder(node =>
             {
                 nodesPreOrderList.Add(node);
             });
@@ -135,12 +135,12 @@ namespace BinaryTree.Tests
         }
 
         [Fact]
-        public void VisitNodesPostOrder_ShouldPassTreeInPostOrder()
+        public void TraversalPostOrder_ShouldPassTreeInPostOrder()
         {
             var tree = BinaryTreeTestData.SetupTestTree();
             var nodesPostOrderList = new List<BinaryTreeNode<int>>();
 
-            tree.VisitNodesPostOrder(node =>
+            tree.TraversalPostOrder(node =>
             {
                 nodesPostOrderList.Add(node);
             });

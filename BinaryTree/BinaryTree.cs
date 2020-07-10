@@ -37,7 +37,7 @@ namespace BinaryTree
             {
                 var count = 0;
 
-                VisitNodesPreOrder(node =>
+                TraversalPreOrder(node =>
                 {
                     if (node.Status == BinaryTreeNodeStatus.NodeWithZeroChildren)
                         count++;
@@ -56,7 +56,7 @@ namespace BinaryTree
             {
                 var count = 0;
 
-                VisitNodesPreOrder(node =>
+                TraversalPreOrder(node =>
                 {
                     if (node.Status == BinaryTreeNodeStatus.NodeWithLeftChild
                         || node.Status == BinaryTreeNodeStatus.NodeWithRightChild)
@@ -76,7 +76,7 @@ namespace BinaryTree
             {
                 var count = 0;
 
-                VisitNodesPreOrder(node =>
+                TraversalPreOrder(node =>
                 {
                     if (node.Status == BinaryTreeNodeStatus.NodeWithTwoChildren)
                         count++;
@@ -215,36 +215,36 @@ namespace BinaryTree
         /// Visits all tree nodes in direct order (from min to max node) and performs specified action for each node
         /// </summary>
         /// <param name="action">Action to perform</param>
-        public void VisitNodesInOrder(Action<BinaryTreeNode<T>> action)
+        public void TraversalInOrder(Action<BinaryTreeNode<T>> action)
         {
-            BinaryTreeRecursiveHelper<T>.VisitNodesInOrder(Root, action);
+            BinaryTreeRecursiveHelper<T>.TraversalInOrder(Root, action);
         }
 
         /// <summary>
         /// Visits all tree nodes in reverse order (from max to min node) and performs specified action for each node
         /// </summary>
         /// <param name="action">Action to perform</param>
-        public void VisitNodesInOrderReverse(Action<BinaryTreeNode<T>> action)
+        public void TraversalInOrderReverse(Action<BinaryTreeNode<T>> action)
         {
-            BinaryTreeRecursiveHelper<T>.VisitNodesInOrderReverse(Root, action);
+            BinaryTreeRecursiveHelper<T>.TraversalInOrderReverse(Root, action);
         }
 
         /// <summary>
         /// Visits all tree nodes in pre order (from root to left and right, symmetric) and performs specified action for each node
         /// </summary>
         /// <param name="action">Action to perform</param>
-        public void VisitNodesPreOrder(Action<BinaryTreeNode<T>> action)
+        public void TraversalPreOrder(Action<BinaryTreeNode<T>> action)
         {
-            BinaryTreeRecursiveHelper<T>.VisitNodesPreOrder(Root, action);
+            BinaryTreeRecursiveHelper<T>.TraversalPreOrder(Root, action);
         }
 
         /// <summary>
         /// Visits all tree nodes in post order and performs specified action for each node
         /// </summary>
         /// <param name="action">Action to perform</param>
-        public void VisitNodesPostOrder(Action<BinaryTreeNode<T>> action)
+        public void TraversalPostOrder(Action<BinaryTreeNode<T>> action)
         {
-            BinaryTreeRecursiveHelper<T>.VisitNodesPostOrder(Root, action);
+            BinaryTreeRecursiveHelper<T>.TraversalPostOrder(Root, action);
         }
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace BinaryTree
         /// </summary>
         public void Clear()
         {
-            BinaryTreeRecursiveHelper<T>.VisitNodesPostOrder(Root, node =>
+            BinaryTreeRecursiveHelper<T>.TraversalPostOrder(Root, node =>
             {
                 Delete(node.Value);
             });

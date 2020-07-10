@@ -13,13 +13,13 @@ namespace BinaryTree
         /// </summary>
         /// <param name="root">Starting node</param>
         /// <param name="action">Action to perform</param>
-        public static void VisitNodesInOrder(BinaryTreeNode<T> root, Action<BinaryTreeNode<T>> action)
+        public static void TraversalInOrder(BinaryTreeNode<T> root, Action<BinaryTreeNode<T>> action)
         {
             if (root != null)
             {
-                VisitNodesInOrder(root.Left, action);
+                TraversalInOrder(root.Left, action);
                 action(root);
-                VisitNodesInOrder(root.Right, action);
+                TraversalInOrder(root.Right, action);
             }
         }
 
@@ -28,13 +28,13 @@ namespace BinaryTree
         /// </summary>
         /// <param name="root">Starting node</param>
         /// <param name="action">Action to perform</param>
-        public static void VisitNodesInOrderReverse(BinaryTreeNode<T> root, Action<BinaryTreeNode<T>> action)
+        public static void TraversalInOrderReverse(BinaryTreeNode<T> root, Action<BinaryTreeNode<T>> action)
         {
             if (root != null)
             {
-                VisitNodesInOrderReverse(root.Right, action);
+                TraversalInOrderReverse(root.Right, action);
                 action(root);
-                VisitNodesInOrderReverse(root.Left, action);
+                TraversalInOrderReverse(root.Left, action);
             }
         }
 
@@ -43,13 +43,13 @@ namespace BinaryTree
         /// </summary>
         /// <param name="root">Starting node</param>
         /// <param name="action">Action to perform</param>
-        public static void VisitNodesPreOrder(BinaryTreeNode<T> root, Action<BinaryTreeNode<T>> action)
+        public static void TraversalPreOrder(BinaryTreeNode<T> root, Action<BinaryTreeNode<T>> action)
         {
             if (root != null)
             {
                 action(root);
-                VisitNodesPreOrder(root.Left, action);
-                VisitNodesPreOrder(root.Right, action);
+                TraversalPreOrder(root.Left, action);
+                TraversalPreOrder(root.Right, action);
             }
         }
 
@@ -58,12 +58,12 @@ namespace BinaryTree
         /// </summary>
         /// <param name="root">Starting node</param>
         /// <param name="action">Action to perform</param>
-        public static void VisitNodesPostOrder(BinaryTreeNode<T> root, Action<BinaryTreeNode<T>> action)
+        public static void TraversalPostOrder(BinaryTreeNode<T> root, Action<BinaryTreeNode<T>> action)
         {
             if (root != null)
             {
-                VisitNodesPostOrder(root.Left, action);
-                VisitNodesPostOrder(root.Right, action);
+                TraversalPostOrder(root.Left, action);
+                TraversalPostOrder(root.Right, action);
                 action(root);
             }
         }
